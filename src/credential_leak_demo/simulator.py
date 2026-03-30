@@ -26,4 +26,4 @@ def simulate_exfiltration():
         "demo_client_secret": client_secret,
     }
 
-    print("Doing nothing for now")
+    print(json.dumps(payload, indent=4))
