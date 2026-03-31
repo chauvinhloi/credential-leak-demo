@@ -12,6 +12,10 @@ authors = [
   { name = "Demo Lab" }
 ]
 
+dependencies = [
+  "sendgrid>=6.0.0"
+]
+
 [tool.setuptools]
 package-dir = {"" = "src"}
 
