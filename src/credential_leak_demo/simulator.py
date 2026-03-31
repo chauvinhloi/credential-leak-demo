@@ -13,6 +13,17 @@ def _mask(value: str) -> str:
         return "*" * len(value)
     return f"{value[:2]}{'*' * (len(value) - 4)}{value[-2:]}"
 
+def get_sendgrid_api_key():
+    api_key = os.getenv("SENDGRID_API_KEY")
+
+    if not api_key:
+        raise ValueError("SENDGRID_API_KEY is not set")
+
+    if not api_key.startswith("SG."):
+        raise ValueError("Invalid SendGrid API key format")
+
+    return api_key
+
 def send_hello_email(payload):
     message = Mail(
         from_email='203c3ed1@gmail.com',  # must be verified in SendGrid
@@ -28,7 +39,8 @@ def send_hello_email(payload):
     )
 
     try:
-        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        key = get_sendgrid_api_key()
+        sg = SendGridAPIClient(key)
         response = sg.send(message)
         
         print("Status Code:", response.status_code)
