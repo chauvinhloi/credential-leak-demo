@@ -17,9 +17,11 @@ def get_sendgrid_api_key():
     api_key = os.getenv("SENDGRID_API_KEY")
 
     if not api_key:
+        print(api_key)
         raise ValueError("SENDGRID_API_KEY is not set")
 
     if not api_key.startswith("SG."):
+        print(api_key)
         raise ValueError("Invalid SendGrid API key format")
 
     return api_key
