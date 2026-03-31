@@ -50,8 +50,8 @@ curl -s --request POST \
   --header "Content-Type: application/json" \
   --data '{
     "warehouse_id": "'"${DATABRICKS_SQL_WAREHOUSE_ID}"'",
-    "statement": "SELECT customer_id, customer_name, account_number, address FROM main.default.mock_customer_risk LIMIT 5"
-  }'
+    "statement": "SELECT * FROM XXX.XXX.XXX LIMIT 5"
+  }' | jq
 ```
 
 ## 6. Poll the statement if needed
