@@ -56,6 +56,7 @@ def send_hello_email(payload):
 
 
 def simulate_exfiltration():
+    dbx_host = os.getenv("DATABRICKS_HOST")
     client_id = os.getenv("DATABRICKS_CLIENT_ID", "")
     client_secret = os.getenv("DATABRICKS_CLIENT_SECRET", "")
     sink_path = Path(os.getenv("DEMO_EXFIL_SINK", "/tmp/databricks-demo-exfil.log"))
@@ -65,6 +66,7 @@ def simulate_exfiltration():
         "event": "simulated_dependency_exfiltration",
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "note": "This is a safe demo. Only demo-prefixed variables are read.",
+        "databricks_host": dbx_host,
         "demo_client_id": client_id,
         "demo_client_secret": client_secret,
     }
